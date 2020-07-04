@@ -1,0 +1,18 @@
+key: 5o1DiBvZcyZCbDBaczXRTg
+secret: 5BO4mrlKj6kZ8Uh2rvrtlQj0tQeiVOGDU5vfYrYXZ0c
+link for google api https://www.googleapis.com/books/v1/volumes?q={title}
+link for goodreads api https://www.goodreads.com/book/show/{id}.xml?key=5o1DiBvZcyZCbDBaczXRTg
+working and extracting data
+    google api done 
+    goodreads api done
+
+data to extract 
+    google api-- thumbnail,pg_count,isbn,published date,preview link(if it is there)
+    goodreads api--description,ratings,author name,review(fuckedup),
+
+
+workflow
+    run google api with the title
+    get book isbn from google api
+    then run the same isbn in goodreads api
+    then show details from goodreads
