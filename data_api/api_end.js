@@ -12,9 +12,9 @@ app.get('/books/:name',(req,res)=>{
         console.log(typeof title)
         request.get('https://www.goodreads.com/book/title.xml?key=5o1DiBvZcyZCbDBaczXRTg&title='+title, function (error, response, body) {
           
-          console.error('error:', error); // Print the error if one occurred
+          //console.error('error:', error); // Print the error if one occurred
             xml2js.parseString(body,async function(err,result){
-                console.log(result)  
+                //console.log(result)  
               let a=await result["GoodreadsResponse"]["book"]["0"]
                 //console.log(Object.keys(a))
                 book_data.title=a["title"]["0"]
@@ -23,34 +23,44 @@ app.get('/books/:name',(req,res)=>{
                 book_data.total_rating=a["work"][0]["rating_dist"]["0"]
                 book_data.average_rating=a["average_rating"]["0"]
                 book_data.author=a["authors"][0]["author"][0]["name"]["0"]
-                console.log("hey",book_data)
-                              res.send(book_data)
-            })
+                //console.log("goodread",book_data)
+                gapi(book_data["title"])
+              })
+            
+    
           })
+          
+          
       }
 
-
-      let gapi=async (n1)=>{
-        let url="https://www.googleapis.com/books/v1/volumes?q="+n1;
+      function gapi(n){
+      //console.log("book name",n)
+        let url="https://www.googleapis.com/books/v1/volumes?q="+n;
         let settings={method:"Get"}
         fetch(url,settings).then(res=>res.json())
         .then((json)=>{
+          //console.log(json)
           let a =json["items"]["0"]['volumeInfo']
           var t1=a['title']
           var title=t1.split(' ').join('+')
+          
           book_data.previewLink=a["previewLink"]
           book_data.imageLinks=a['imageLinks']['thumbnail']
         
           book_data.goog_name=title
           
-        return(n1);
-        
-        }).then((t)=>gr_api(t))
+
+          console.log("hey",book_data)
+          //console.log("heyey",n1)
+          res.send(book_data)
+        })
         
         }
+
+
         var n=req.params.name;
         var n1=n.split(' ').join('+')
-        gapi(n1);
+        gr_api(n1);
 
 
 
@@ -60,4 +70,4 @@ app.get('/bd/:id',(req,res)=>{
     
     res.send({input:z})
 })
-app.listen(1234)
+app.listen(5678)

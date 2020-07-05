@@ -1,0 +1,20 @@
+.dimg{
+    width: 100%;
+}
+.info{
+    width: 100%;
+    
+}
+
+@media only screen and (min-width: 768px) {
+    /* For everything bigger than 768px */
+    .dimg{
+      width: 30%;
+      
+      float: left;
+    }
+    .info{
+        width: 70%;
+        float:right;
+    }
+}
